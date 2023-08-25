@@ -1,0 +1,95 @@
+<html>
+
+<head>
+
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css"
+        integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14=" crossorigin="" />
+
+</head>
+
+<body id="body">
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
+        integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
+
+    <style>
+        #map {
+            height: 500px;
+            width: 800px;
+        }
+    </style>
+
+    <!-- <a href="../index.html"><button>Go backs</button></a> -->
+
+    <h2>This is where the ISS is located:</h2>
+    <p>latitude: <span id="lat"></span></p>
+    <p>longitude: <span id="lon"></span></p>
+    <div id="map"></div>
+
+
+    <script>
+
+
+        const map = L.map('map').setView([0, 0], 2);
+
+        var issIcon = L.icon({
+            iconUrl: '../assets/img/iss.png',
+            iconSize: [50, 32],
+            iconAnchor: [25, 16],
+            popupAnchor: [-3, -76],
+
+        });
+
+        const markerIss = L.marker([0, 0], { icon: issIcon }).addTo(map);
+        const markerUser = L.marker([0, 0]).addTo(map);
+
+        const attribution = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
+        const tileurl = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+
+        const tiles = L.tileLayer(tileurl, { attribution });
+        tiles.addTo(map);
+
+        getISS();
+
+        setInterval(getISS, 1000);
+        let firstTime = true;
+
+        // using an external API fetching JSON
+        async function getISS() {
+
+            const api_url = 'https://api.wheretheiss.at/v1/satellites/25544';
+            const response = await fetch(api_url);
+            const data = await response.json();
+
+            const { latitude, longitude } = data;
+
+            // console.log(data);
+            // console.log(data.latitude);
+            // console.log(data.longitude);
+
+            document.getElementById('lat').textContent = latitude.toFixed(2);
+            document.getElementById('lon').textContent = longitude.toFixed(2);
+
+            if (firstTime) {
+                map.setView([latitude, longitude], 2);
+
+                firstTime = false;
+            }
+
+            markerIss.setLatLng([latitude, longitude]);
+
+            if ('geolocation' in navigator) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    markerUser.setLatLng([position.coords.latitude, position.coords.longitude]);
+                });
+            }
+        }
+
+        //function getGeo()
+
+    </script>
+
+</body>
+
+</html>

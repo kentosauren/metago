@@ -36,44 +36,55 @@ app.post('/send-email', (req, res) => {
     const name = req.body.name;
     const email = req.body.email;
     const message = req.body.message;
+    if (!name || !email || !message) {
+        console.log('Please enter all fields');
+        return;
+    }
+  
+    console.log("backend: ", name, email, message);
   
     // create the transporter object using nodemailer
     const transporter = nodemailer.createTransport({
-    //   service: 'gmail',
-      service: 'office365',
-      port: 587,
+      service: 'gmail',
+    //   service: 'office365',
+
+    //   port: 587,//office
+      port: 465,//gmail
+
       auth: {
         //gmail
-        // user: 'kentosauren@gmail.com',
-        // pass: 'lqmtsafncepnefem'
+        user: 'kentosauren@gmail.com',
+        pass: 'lqmtsafncepnefem'
 
         //office
         // user: 'kent@metabro.no',
-        user: 'metabroMail',
-        pass: 'bvrgydrsgggdlsgr'
+        // user: 'metabroMail',
+        // pass: 'bvrgydrsgggdlsgr'
       }
     });
   
     // create the email options
     const mailOptions = {
     //   from: 'kent@gmail.com',
-    from: 'kent@metabro.no',
-      to: 'kent@metabro.no',
+    from: 'post@metabro.no',
+      to: 'post@metabro.no',
       subject: `Message from ${name}`,
       html: `<h1>Hello!</h1><p>You have received a message from ${name} (${email}):</p><p>${message}</p>`
     };
   
     // send the email
     transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.log(error);
-        res.status(500).send('Error sending email');
-      } else {
-        console.log('Email sent: ' + info.response);
-        res.send('Email sent');
-      }
+        if (error) {
+          console.log(error);
+          res.status(500).send('Error sending email');
+        } else {
+          console.log('Email sent: ' + info.response);
+          // send a response back to the client with the alert message
+        //    res.send('Email sent successfully!');
+        // res.
+        }
+      });
     });
-  });
 
   //EMAIL END-----------------------------------------------------------------------
   

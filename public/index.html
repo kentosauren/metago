@@ -1,0 +1,273 @@
+<html>
+
+<head>
+  <style>
+
+
+  </style>
+
+
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+  <title>Metago</title>
+  <script src="js/tester.js"></script>
+  <!-- <script src="js/graph.js"></script> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+</head>
+
+<body id="body">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
+    integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
+  <script>
+
+    // let 
+
+    $(document).ready(function () {
+      $("#anchor").click(function (file) {
+
+        event.preventDefault();
+        var file = $(this).attr('file');
+        var js = $(this).attr('js');
+        // $( "#pageContent" ).children().remove();
+        $("#pageContent").hide();
+
+        if (!$("#pageContent").load(file))
+          $("#pageContent").load(file)
+
+        if (!$.getScript(js))
+          $.getScript(js);
+
+
+        //   $.getScript('./js/snake.js')
+        // .done(function() {
+        //   console.log("File is already loaded");
+        // });
+
+        $("#pageContent").fadeIn("slow");
+      });
+    });
+
+    function showHTML(file) {
+      fetch(file)
+        .then(response => response.text())
+        .then(data => {
+          let pageContent = document.getElementById('pageContent');
+          pageContent.style.display = "none";
+          pageContent.innerHTML = data;
+          revealElement();
+        });
+    }
+
+    function revealElement() {
+      $("#pageContent").fadeIn();
+    }
+
+
+
+
+  </script>
+    <!-- <img src="assets/img/chatbubble.png" alt="Chat bubble icon">
+
+<img src="assets/img/escape-icon.png" alt="Escape icon"> -->
+
+
+
+
+
+<div id="chat-bubble">
+  <img src="assets/img/chatbubble.png" alt="Chat bubble icon">
+  <!-- <p>Chat with us</p>z -->
+</div>
+
+<div id="chat-interface">
+  <div id="escape-icon">
+    <img src="assets/img/escape-icon.png" alt="Escape icon">
+  </div>
+  <ul id="chat-messages">
+    <!-- Chat messages will be added here dynamically -->
+  </ul>
+  <form id="chat-form">
+    <input type="text" id="chat-input" placeholder="Type your message here">
+    <button type="submit">Send</button>
+  </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div id="mainPageContainer">
+    <header>
+      <div class="makeSticky">
+        <div class="top-menu">
+          <div class="left-side">
+            <img src="assets/img/logoNoBgWhite.png" alt="Company logo" />
+          </div>
+          <div class="middle">
+            <div class="search-box">
+              <input type="text" placeholder="Enter your search here">
+              <img src="assets/img/search.png" alt="signIn" />
+
+            </div>
+          </div>
+          <div class="right-side">
+            <div class="outer-div">
+
+              <div class="dropdown">
+                <div class="trigger">
+                  <div class="top-right-menu-item">
+                    <img src="assets/img/threebars.png" alt="support" />
+                    <p>More</p>
+                  </div>
+                </div>
+                <div class="dropdown-content">
+                  <!-- Add the dropdown list items here -->
+                  <a href="#">
+                    <img src="assets/img/heart.png" width="30" height="30">
+                    <span>Favoritter</span>
+                  </a>
+                  <a href="#">
+                    <img src="assets/img/support.png" width="30" height="30">
+                    <span>Kundeservice</span>
+                  </a>
+                  <a href="#">
+                    <img src="assets/img/user.png" width="30" height="30">
+                    <span>Logg inn</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- <div id="menuItemFull"> -->
+                <div class="top-right-menu-item">
+                  <img src="assets/img/heart.png" alt="Shopping basket" />
+                  <p>Favoritter</p>
+                </div>
+                <div class="top-right-menu-item">
+                  <img src="assets/img/support.png" alt="support" />
+                  <p>Kundeservice</p>
+                </div>
+                <div class="top-right-menu-item">
+                  <img src="assets/img/user.png" alt="signIn" />
+                  <p>Logg inn</p>
+                </div>
+                <div class="top-right-menu-item">
+                  <div class="items-in-basket-circle">2</div>
+                  <img src="assets/img/shoppingcart.png" alt="Shopping basket" />
+                  <p>5499,-</p>
+                </div>
+              <!-- </div> -->
+            </div>
+
+          </div>
+        </div>
+        <hr>
+
+
+        <div class="nav-header">
+          <!-- Create the links -->
+          <!-- <a href="#" onclick="showHTML('snake.html');">GAMES</a> -->
+          <a id="anchor" href="" file="snake.html" js="./js/snake.js">GAMES</a>
+          <a id="anchor" href="./portefolioPage/index.html">HOMEPAGE</a>
+          <a id="anchor" href="#" file='graph.html'>GRAPH</a>
+
+          <a id="anchor" href="./testStuff/map.html" js="../js/chart.js">TEST</a>
+          <a id="anchor" href="" file="testStuff/map.html" js="../js/map.js">map go</a>
+          <a id="anchor" href="#">ABOUT</a>
+          <a id="anchor" href="#">WEBSHOP</a>
+          <a id="anchor" href="#section1">BOOKING</a>
+        </div>
+        <!-- <a href="http://www.vg.no"><img src="assets/img/vipps.png" class="vippsButton" /></a> -->
+      </div>
+    </header>
+
+    <!-- <button id="vippsButton" src="assets/img/vipps.png" ></button> -->
+
+    <div id="pageContent">
+
+      <!-- <form action="/pay" method="post">
+      <label for="vipps-phone">Vipps Phone Number:</label>
+      <input type="text" name="vipps-phone" id="vipps-phone" />
+      <br />
+      <label for="item-price">Item Price:</label>
+      <input type="text" name="item-price" id="item-price" />
+      <br />
+      <input type="submit" value="Pay with Vipps" />
+    </form> -->
+
+
+
+
+      <!-- <div id="section1">party hard</div>
+    <div id="section2"></div> -->
+
+    </div>
+    <div class="bottom-bar">
+      <div class="column">
+        <h3>Column 1</h3>
+        <ul>
+          <li>Item asdfasdfadsfasdfasdf1</li>
+          <li>Item 2</li>
+          <li>Item 3</li>
+        </ul>
+      </div>
+      <div class="column">
+        <h3>Metago AS</h3>
+        <ul>
+          <li>Planetensveg 9B</li>
+          <li>3024 Drammen</li>
+          <li>123 456 321 MVA</li>
+        </ul>
+      </div>
+      <div class="column">
+        <h3>Column 3</h3>
+        <ul>
+          <li>Item 1</li>
+          <li>Item 2</li>
+          <li>Item 3</li>
+        </ul>
+      </div>
+    </div>
+    <!-- <script src="js/snake.js"></script> -->
+  </div>
+    <!-- Inline script containing JavaScript code -->
+    <script>
+      // Toggle chat interface when chat bubble is clicked
+  // Toggle chat interface when chat bubble is clicked
+  document.getElementById('chat-bubble').addEventListener('click', function () {
+    document.getElementById('chat-interface').style.display = 'block';
+  });
+
+  // Close chat interface when escape icon is clicked
+  document.getElementById('escape-icon').addEventListener('click', function () {
+    document.getElementById('chat-interface').style.display = 'none';
+  });
+
+  // Submit chat form when "Send" button is clicked
+  document.getElementById('chat-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    // Get message from input field
+    let message = document.getElementById('chat-input').value;
+    // Clear input field
+    document.getElementById('chat-input').value = '';
+    // Add message to chat messages list
+    // Add message to chat messages list
+    let chatMessages = document.getElementById('chat-messages');
+    let messageItem = document.createElement('li');
+    messageItem.innerText = message;
+    chatMessages.append(messageItem, chatMessages.firstChild);
+    // Scroll chat messages list to the bottom
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  });
+
+    </script>
+</body>
+
+
+</html>

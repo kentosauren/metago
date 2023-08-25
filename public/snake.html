@@ -1,0 +1,57 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="css/snake.css" />
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <title>Metago</title>
+
+</head>
+
+<body>
+    <!-- <a href="index.html"><button>Go backs</button></a> -->
+
+    <div id="masterContainer">
+        <div id="highScoreContainer">
+            <div id="highScoreHeader">HIGH SCORE </div>
+            <!-- <div -->
+            <ol id="HighScoreList">
+            </ol>
+        </div>
+<div id="gameContainer">
+    <div id="topContainer">
+        <div id="scoreText">0</div>
+        <div id="gameTitle">SnakeGo</div>
+        <div id="retryButtonWrapper">
+            <div id="retryButton" onclick="retryButton()">
+                <img style="padding-top: 10;" id="retryimg" src="assets/game/img/retry.png"
+                    width="50px" height="50px" ><br>
+            </div>
+        </div>
+                <!-- </div> -->
+
+    
+            </div>
+    
+    
+            <!-- ---------------------- -->
+    
+            <div id="highScoreInputCollection">
+                <div id="highScoreAnnouncement">NEW HIGH SCORE!</div>
+                <input id="highScoreTextInput" maxlength="9" placeholder="Your Name"></input>
+                <input id="highScoreSubmitButton" type="image" onclick="setHighScore()" src="assets/img/checkgreensmall.png"
+                    name="submit" alt="submit" />
+            </div>
+            <canvas id="playfield" width="600" height="600">
+    
+            </canvas>
+        </div>
+    </div>
+    <!-- <script src="js/snake.js"></script> -->
+    <br>
+
+    <!-- enter name for high score: <input id="username" type="text"/><br>
+    <button onclick="setHighScore()">submit high score</button> -->
+
+</body>
+
+</html>

@@ -1,0 +1,176 @@
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+
+</head>
+<body>
+
+<a href="../index.html"><button>Go back</button></a>
+
+    <!-- <div id="playfield">
+        <div id="playerobj">
+        </div>
+        <div id="pwrUpObj">
+        </div>
+
+    </div> -->
+
+    <button onclick="dbtest()">
+        <h1>select DB</h1>
+    </button>
+
+    
+
+    <!-- <button id="upbutton" onclick="movePlayerLeft()" style='font-size:24px'> Move left<i class='fas fa-arrow-up'
+        style='font-size:36px'></i></button> -->
+    <input onclick="sliderFunc()" id="slider" type="range" min="1" max="100" value="50">
+    <div id="test">
+
+        <div onclick="testFunc()" id="tester">
+            <p id="testchild">
+                <font>text1</font>
+            </p>
+        </div>
+    </div>
+
+
+    <br>
+
+    <script src="../js/main.js"></script>
+    <!-- <script src="js/dbtest.js"></script> -->
+
+    your geo location:
+    <p>latitude: <span id="lat"></span></p>
+    <p>longitude: <span id="lon"></span></p>
+
+    <script>
+        //fetch with post and response from server
+        if ('geolocation' in navigator) {
+            navigator.geolocation.getCurrentPosition(async position => {
+                console.log(position);
+
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                document.getElementById('lat').textContent = lat.toFixed(2);
+                document.getElementById('lon').textContent = lon.toFixed(2);
+
+                const data = { lat, lon };
+                const options = {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+
+                };
+                //this sends to server              then method gets from server
+                const response = await fetch('/api', options);
+                const json = await response.json();
+                console.log('This is the message from the server: ', json);
+
+
+            })
+        } else {
+            console.log("geo not available");
+        }
+
+
+    </script>
+
+    <canvas id="myChart" width="400" height="400"></canvas>
+    <img id="rainbow" src="" width="200px" height="200px" />
+
+
+    <script>
+        console.log("fetching rainbow");
+
+        getImage().catch(error => {
+            console.error('error malaga');
+            console.error(error);
+        });
+
+        const xlabels = [];
+        const ytemps = [];
+
+        //getCsvData();
+        createChart();
+
+
+        async function createChart() {
+            await getCsvData(); // denne kalles f;rst og paaventes
+            const ctx = document.getElementById('myChart').getContext('2d');
+
+            const myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    // labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                    labels: xlabels,
+                    datasets: [{
+                        label: 'Global Temperature',
+                        // data: [12, 19, 3, 5, 2, 3,13],
+                        data: ytemps,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+
+
+
+
+        //charting reading csv file
+        async function getCsvData() {
+            const response = await fetch('../assets/csv/test.csv');
+            const data = await response.text();
+            //console.log(data);
+
+            const table = data.split('\n').slice(1);
+            table.forEach(row => {
+                const columnns = row.split(',');
+                const year = columnns[0];
+                xlabels.push(year);
+
+                const temp = columnns[1];
+                ytemps.push(temp);
+
+
+                console.log(year, row);
+            });
+            //console.log(rows);
+
+        }
+
+        //asyncronously fetch
+        async function getImage() {
+            const response = await fetch('../assets/img/rainbow.png');
+            const blob = await response.blob();
+            document.getElementById('rainbow').src = URL.createObjectURL(blob);
+        }
+    </script>
+</body>
+
+</html>

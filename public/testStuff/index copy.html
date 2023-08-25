@@ -1,0 +1,308 @@
+<html>
+
+<head>
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <link rel="stylesheet" href="css/style.css">
+   
+
+</head>
+<style >
+    test {
+    background-color: grey;
+    color: white;
+    font-size: 50;
+    text-align: center;
+    display: table-cell;
+    width: 800em;
+    height: 200px;
+    padding: 10px;
+    border: 3px dashed #1c87c9;
+    vertical-align: middle;
+}
+
+#h1{
+background-color: red;
+
+}
+
+#playfield {
+    position: relative;
+    background-color: rgb(71, 25, 25);
+    margin: auto;
+    height: 400px;
+    width: 400px;
+
+}
+
+#playerobj {
+    position: absolute;
+    background-color: rgb(56, 197, 0);
+    height: 20px;
+    width: 20px;
+    border: 3px dashed #1c87c9;
+    /* left: 200px;
+    bottom: 0px; */
+}
+
+menuBar 
+{
+    width: 100%;
+    height: 100em;
+    background-color: #fcba03;
+    font-size: 30em;
+
+}
+</style>
+
+<body id="body" style="color:white; background-color: black;">
+    BGcolor:
+    <button onclick="changeBg(1)"> Black</button>
+    <button onclick="changeBg(2)"> Green</button>
+    <button onclick="changeBg(3)"> Red</button>
+    <hr>
+
+<h1> Metago</h1>
+
+Meny  
+
+
+
+    <br>
+
+    <div id="playfield">
+        <div id="playerobj">
+        </div>
+    </div>
+    <button id="upbutton" onclick="movePlayerLeft()" style='font-size:24px'> left<i class='fas fa-arrow-up' style='font-size:36px'></i></button>
+
+    <test onclick="testFunc()" id="tester">
+        <p id="testchild">
+            <font>text1</font>
+        </p>
+    </test>
+
+
+
+        <!-- <button id="downbutton" onclick="fontFunc(2)" style='font-size:24px'> Down</button>  -->
+    <input on="sliderFunc()" id="slider" type="range" min="1" max="100" value="50">
+
+    <br>
+
+
+
+    <!-- <p id="fontsizeText">fontSize</p> -->
+
+    <script>
+
+
+        // var toggle = false;
+
+        const text1 = "parchament";
+        const text2 = "paper";
+
+        var body = document.getElementById('body');
+        var tester = document.getElementById('tester');
+        var testchild = document.getElementById('testchild');
+        var fontsizeText = document.getElementById('fontsizeText');
+        var slider = document.getElementById('slider');
+        var sliderValueText = document.getElementById('sliderValueText');
+        var playerobj = document.getElementById('playerobj');
+        var playfield = document.getElementById('playfield');
+
+        playerobj.style.left = '200px';
+        playerobj.style.bottom = '200px';
+
+        playfield.style.width = '400px';
+        playfield.style.height = '400px';
+        playerobj.style.width = '20px'
+        playerobj.style.height = '20px'
+
+        document.querySelector('input')
+            .addEventListener('input', evt => {
+                //sliderValueText.innerHTML = evt.target.value;
+                tester.style.fontSize = evt.target.value;
+
+            });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.which === 37 || e.which === 39  || e.which === 38  || e.which === 40 ) {
+                movePlayer(e.which)
+            }
+        })
+
+        // document.addEventListener('keydown', function (e) {
+        //     if (e.which === 39) {
+        //         movePlayerRight()
+        //     }
+        // })
+
+        // document.addEventListener('keydown', function (e) {
+        //     if (e.which === 38) {
+        //         movePlayer()
+        //     }
+        // })
+
+        // document.addEventListener('keydown', function (e) {
+        //     if (e.which === 40) {
+        //         movePlayerDown()
+        //     }
+        // })
+
+        var fontSize = parseInt(tester.style.fontSize);
+
+        var sliderValue = parseInt(slider.value);
+        //sliderValueText.innerHTML = slider.value;
+
+        testchild.innerHTML = text1;
+
+        //console.log(fontSize);
+
+        function movePlayerLeft() {
+            var leftNumbers = playerobj.style.left.replace('px', '')
+            var left = parseInt(leftNumbers, 10)
+            //console.log(leftNumbers);
+            //console.log(left);
+
+            if (left > 0) {
+                playerobj.style.left = `${left - 1}px`
+            }
+        }
+
+        function movePlayer(keyPressed) {
+            var leftNumbers = playerobj.style.left.replace('px', '')
+            var left = parseInt(leftNumbers, 10)
+
+            var bottomNumbers = playerobj.style.bottom.replace('px', '')
+            var bottom = parseInt(bottomNumbers, 10)
+  
+            var speed = 8;
+            switch(keyPressed)
+            {
+                case 37: //left
+                    if (left > 0) 
+                        playerobj.style.left = `${left - speed}px`
+                        break;
+                case 39://right 
+
+                    if (left < (playfield.style.width.replace('px', '') - playerobj.style.width.replace('px', ''))) 
+                        playerobj.style.left = `${left + speed}px`
+                        break;
+                    case 38://up 
+                    if (bottom > 0) 
+                        playerobj.style.bottom = `${bottom + speed}px`
+                        break;   
+                case 40://down 
+                    if (bottom > (400-playerb.style.width)) 
+                        playerobj.style.bottom = `${bottom - speed}px`
+                        break;
+                     
+            }
+        }
+
+        // function movePlayerUp() {
+        //     var UpNumbers = playerobj.style.up.replace('px', '')
+        //     var Up = parseInt(UpNumbers, 10)
+        //     //console.log(leftNumbers);
+        //     //console.log(left);
+
+        //     if (Up > 0) {
+        //         playerobj.style.up = `${Up - 1}px`
+        //     }
+        // }
+
+        // function movePlayerDown() {
+        //     var DownNumbers = playerobj.style.down.replace('px', '')
+        //     var Down = parseInt(DownNumbers, 10)
+        //     //console.log(leftNumbers);
+        //     //console.log(left);
+
+        //     if (Down > 0) {
+        //         playerobj.style.down = `${Down - 1}px`
+        //     }
+        // }
+
+        function sliderFunc() {
+            sliderValueText.innerHTML = slider.value;
+        }
+        function changeBg(type) {
+            var bgcolor;
+
+            if (type == 1)
+                bgcolor = "black"
+            if (type == 2)
+                bgcolor = "green"
+            if (type == 3)
+                bgcolor = "red"
+
+            body.style.backgroundColor = bgcolor;
+            console.log(bgcolor);
+
+        }
+
+        function fontFunc(type) {
+            if (type == 1)
+                fontSize += 10;
+            else
+                fontSize -= 10;
+
+            testchild.style.fontSize = fontSize;
+            console.log(fontSize);
+
+        }
+
+
+
+        // function upFunc()
+        // {
+        //     fontSize++;
+        //     testchild.style.fontSize = fontSize;
+        // console.log(fontSize);
+
+        // }
+
+        // function downFunc()
+        // {
+        //     fontSize--
+        //     testchild.style.fontSize = fontSize;
+        // console.log(fontSize);
+
+        // }
+
+        function testFunc2() {
+
+            if (testchild.innerHTML == text2)
+                fontSize++;
+            else
+                fontSize--;
+
+            testchild.style.fontSize = fontSize;
+
+
+        }
+
+        function testFunc() {
+            //console.log("Hello world!");
+            // console.log(testchild.innerHTML );
+            //var tester = document.getElementById('tester');
+            //var testchild = document.getElementById('testchild');
+
+            //if(toggle)
+            if (testchild.innerHTML == text2)
+                testchild.innerHTML = text1;
+            else
+                testchild.innerHTML = text2;
+
+            //toggle = !toggle;
+
+
+
+            //tester.removeChild(testchild);
+
+            //document.getElementById('tester').removeChild(document.getElementById('testchild'));
+
+
+        }
+    </script>
+</body>
+
+</html>
